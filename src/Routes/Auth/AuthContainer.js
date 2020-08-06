@@ -8,6 +8,7 @@ export default () => {
   const requestSecret = useMutation(LOG_IN, {
     variables: { email: email.value },
   });
+
   const [action, setAction] = useState("logIn");
   const username = useInput("");
   const firstName = useInput("");
