@@ -10,7 +10,7 @@ export default {
   redColor: "#ED4956",
   darkerBlueColor: "#003569",
   boxBorder: "1px solid #e6e6e6",
-  buttonRadius: "4px",
+  borderRadius: "4px",
   whiteBox: `
     border-radius: ${BORDER_RADIUS};
     border: ${BOX_BORDER};

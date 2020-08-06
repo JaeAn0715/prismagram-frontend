@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import useInput from "../Hooks/useInput";
-import { useMutation } from "react-apollo-hooks";
-import { LOG_IN } from "./Auth/AuthQueries";
+import React from "react";
 import styled from "styled-components";
-import Input from "../Components/input";
-import Button from "../Components/Button";
-import { ReactComponent as Logo } from "../Img/logo.svg";
+import Input from "../../Components/input";
+import Button from "../../Components/Button";
+import { ReactComponent as Logo } from "../../Img/logo.svg";
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -55,24 +52,15 @@ const logoStyle = {
   marginBottom: "30px",
 };
 
-export default () => {
-  const requestSecret = useMutation(LOG_IN, {
-    variables: { email: email.value },
-  });
-  const [action, setAction] = useState("logIn");
-  const username = useInput("");
-  const firstName = useInput("");
-  const lastName = useInput("");
-  const email = useInput("");
-
-  const onLogin = (e) => {
-    e.preventDefault();
-    console.log("!!");
-    if (email !== "") {
-      requestSecret();
-    }
-  };
-
+export default ({
+  action,
+  username,
+  firstName,
+  lastName,
+  email,
+  setAction,
+  onLogin,
+}) => {
   return (
     <Wrapper>
       {action === "logIn" ? (
