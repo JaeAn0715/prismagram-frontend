@@ -4,7 +4,6 @@ import reset from "styled-reset";
 export default createGlobalStyle`
 
     ${reset}
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400;500;700&display=swap');
     *{
         box-sizing:border-box;
     }
@@ -13,7 +12,8 @@ export default createGlobalStyle`
         background-color: ${(props) => props.theme.bgColor};
         color: ${(props) => props.theme.blackColor};
         font-size: 14px;
-        font-family: 'Noto Sans JP', sans-serif;
+        font-family: 'Noto Sans KR', sans-serif;
+        padding-top: 140px;
     }
 
     a{

@@ -1,14 +1,15 @@
 import React from "react";
+
 import styled from "styled-components";
 import Input from "../../Components/input";
 import Button from "../../Components/Button";
 import { ReactComponent as Logo } from "../../Img/logo.svg";
+import Helmet from "react-helmet";
 
 const Wrapper = styled.div`
   min-height: 80vh;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 `;
 
@@ -29,6 +30,7 @@ const Link = styled.span`
 `;
 
 const Form = styled(Box)`
+  margin-top: 80px;
   padding: 40px;
   padding-bottom: 30px;
   margin-bottom: 15px;
@@ -52,42 +54,92 @@ const logoStyle = {
   marginBottom: "30px",
 };
 
-export default ({
-  action,
+const AuthPresenter = ({
   username,
   firstName,
   lastName,
   email,
+  secret,
+  action,
+  onSubmit,
   setAction,
-  onLogin,
 }) => {
   return (
     <Wrapper>
-      {action === "logIn" ? (
-        <Form onSubmit={onLogin}>
-          <Logo style={logoStyle} />
-          <Input placeholder={"Email"} {...email} />
-          <Button text={"Log In"} />
-        </Form>
-      ) : (
-        <Form onSubmit={onLogin}>
-          <Logo style={logoStyle} />
-          <Input placeholder={"First Name"} {...firstName} />
-          <Input placeholder={"Last Name"} {...lastName} />
-          <Input placeholder={"Email"} {...email} type="email" />
-          <Input placeholder={"Username"} {...username} />
-          <Button text={"Sign Up"} />
-        </Form>
-      )}
+      <Form>
+        {action === "logIn" && (
+          <>
+            <Helmet>
+              <title>Log In | J-Stargram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Logo style={logoStyle} />
+              <Input placeholder={"Email"} {...email} type="email" />
+              <Button text={"Log in"} />
+            </form>
+          </>
+        )}
+        {action === "signUp" && (
+          <>
+            <Helmet>
+              <title>Sign Up | J-Stargram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Logo style={logoStyle} />
+              <Input
+                placeholder={"Email"}
+                value={email.value}
+                onChange={email.onChange}
+                type="email"
+              />
+              <Input
+                placeholder={"Username"}
+                value={username.value}
+                onChange={username.onChange}
+              />
+              <Input
+                placeholder={"First Name"}
+                value={firstName.value}
+                onChange={firstName.onChange}
+              />
+              <Input
+                placeholder={"Last Name"}
+                value={lastName.value}
+                onChange={lastName.onChange}
+              />
+              <Button text={"Sign Up"} />
+            </form>
+          </>
+        )}
+        {action === "confirm" && (
+          <>
+            <Helmet>
+              <title>Confirm Secret | J-Stargram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Input placeholder="Paste your secret" required {...secret} />
+              <Button text={"Confirm"} />
+            </form>
+          </>
+        )}
+      </Form>
+
       <StateChanger>
-        {action === "logIn" ? (
+        {action === "logIn" && (
           <>
             Don't have an account?
             <Link onClick={() => setAction("signUp")}> Sign up</Link>
           </>
-        ) : (
+        )}
+        {action === "signUp" && (
           <>
             Have an account?
+            <Link onClick={() => setAction("logIn")}> Log in</Link>
+          </>
+        )}
+        {action === "confirm" && (
+          <>
+            Have another account?
             <Link onClick={() => setAction("logIn")}> Log in</Link>
           </>
         )}
@@ -95,3 +147,5 @@ export default ({
     </Wrapper>
   );
 };
+
+export default AuthPresenter;

@@ -1,31 +1,35 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import Auth from "../Routes/Auth/AuthPresenter";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Auth from "../Routes/Auth/index";
 import Feed from "../Routes/Feed";
-import EditProfile from "../Routes/EditProfile";
+import Explore from "../Routes/Explore";
+import Profile from "../Routes/Profile/index";
+import Search from "../Routes/Search/index";
+import Notifications from "../Routes/Notification";
 
 const LoggedInRoutes = () => (
-  <>
-    <Route exact path="/" component={Feed}></Route>
-  </>
+  <Switch>
+    <Route exact path="/" component={Feed} />
+    <Route path="/explore" component={Explore} />
+    <Route path="/search" component={Search} />
+    <Route path="/notifications" component={Notifications} />
+    <Route path="/:username" component={Profile} />
+    <Redirect from="*" to="/" />
+  </Switch>
 );
 
 const LoggedOutRoutes = () => (
-  <>
+  <Switch>
     <Route exact path="/" component={Auth}></Route>
-  </>
+    <Redirect from="*" to="/" />
+  </Switch>
 );
 
-const AppRouter = ({ isLoggedIn }) => (
-  <Router>
-    <Route exact path="/1" component={EditProfile}></Route>
+const AppRouter = ({ isLoggedIn }) =>
+  isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />;
 
-    <Switch>{isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}</Switch>
-  </Router>
-);
-
-Router.prototypes = {
+AppRouter.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
 };
 
